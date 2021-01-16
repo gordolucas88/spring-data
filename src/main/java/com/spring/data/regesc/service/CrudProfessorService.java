@@ -41,12 +41,16 @@ public class CrudProfessorService {
                         break;
                     case 2:
                         this.Atualizar(scanner);
+                        break;
                     case 3:
                         this.Listar();
+                        break;
                     case 4:
                         this.Remover(scanner);
+                        break;
                     case 5:
                         this.ListarUm(scanner);
+                        break;
                     default:
                         isTrue = false;
                         break;
@@ -64,7 +68,9 @@ public class CrudProfessorService {
         System.out.print("Digite o prontuario do professor:");
         String prontuario = scanner.next();
 
-        Professor professor = new Professor(nome, prontuario);
+        Professor professor = new Professor();
+        professor.setNome(nome);
+        professor.setProntuario(prontuario);
         this.professorRepository.save(professor);
         System.out.println("Professor salvo no Banco!!! \n");
     }
@@ -152,9 +158,15 @@ public class CrudProfessorService {
     private void Remover(Scanner scanner){
         System.out.println("Digite o Id do Professor para ser excluido");
         Long id = scanner.nextLong();
-        this.professorRepository.deleteById(id);
+        Optional<Professor> optional = professorRepository.findById(id);
+        if (optional.isPresent()){
+            professorRepository.deleteById(id);
+            System.out.println("Professor Excluido");
+        } else {
+            System.out.println("Professor nao existe");
+        }
 
-        System.out.println("Professor Excluido");
+        System.out.println();
 
     }
 }

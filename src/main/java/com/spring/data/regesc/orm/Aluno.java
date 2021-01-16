@@ -11,7 +11,7 @@ public class Aluno {
     private Long id;
     @Column(nullable = false)
     private String nome;
-    private String idade;
+    private Integer idade;
 
     @ManyToMany(mappedBy = "alunos")
     List<Disciplina> disciplinas;
@@ -21,11 +21,14 @@ public class Aluno {
 
     }
 
-    public Aluno(Long id, String nome, String idade, List<Disciplina> disciplinas) {
+    public Aluno(Long id, String nome, Integer idade, List<Disciplina> disciplinas) {
         this.id = id;
         this.nome = nome;
         this.idade = idade;
         this.disciplinas = disciplinas;
+    }
+
+    public Aluno(String nome, Integer idade) {
     }
 
     public Long getId() {
@@ -44,11 +47,11 @@ public class Aluno {
         this.nome = nome;
     }
 
-    public String getIdade() {
+    public Integer getIdade() {
         return idade;
     }
 
-    public void setIdade(String idade) {
+    public void setIdade(Integer idade) {
         this.idade = idade;
     }
 
@@ -58,5 +61,14 @@ public class Aluno {
 
     public void setDisciplinas(List<Disciplina> disciplinas) {
         this.disciplinas = disciplinas;
+    }
+
+    @Override
+    public String toString() {
+        return "Aluno{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", idade=" + idade +
+                '}';
     }
 }

@@ -69,6 +69,19 @@ public class Disciplina {
                 ", nome='" + nome + '\'' +
                 ", semestre=" + semestre +
                 ", professor=" + professor +
+                ", alunos=" + alunos +
                 '}';
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public List<Aluno> getAlunos() {
+        return alunos;
+    }
+
+    public void setAlunos(List<Aluno> alunos) {
+        this.alunos = alunos;
     }
 }

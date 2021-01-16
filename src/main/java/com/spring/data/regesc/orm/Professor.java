@@ -74,6 +74,7 @@ public class Professor {
                 "id=" + id +
                 ", nome='" + nome + '\'' +
                 ", prontuario='" + prontuario + '\'' +
+
                 '}';
     }
 }
