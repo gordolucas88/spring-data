@@ -1,15 +1,18 @@
 package com.spring.data.regesc.service;
 
 
+import com.spring.data.regesc.orm.Disciplina;
 import com.spring.data.regesc.orm.Professor;
 import com.spring.data.regesc.repository.ProfessorRepository;
 import org.springframework.stereotype.Service;
 
 import javax.swing.*;
+import javax.transaction.Transactional;
 import java.util.Optional;
 import java.util.Scanner;
 
 @Service
+@Transactional
 public class CrudProfessorService {
 
     private ProfessorRepository professorRepository;
@@ -28,6 +31,7 @@ public class CrudProfessorService {
                 System.out.println("2 - Atualizar Professor");
                 System.out.println("3 - Listar Professores");
                 System.out.println("4 - Remove um Professor");
+                System.out.println("5 - Visualizar um Professor");
 
                 int opcao = scanner.nextInt();
 
@@ -41,6 +45,8 @@ public class CrudProfessorService {
                         this.Listar();
                     case 4:
                         this.Remover(scanner);
+                    case 5:
+                        this.ListarUm(scanner);
                     default:
                         isTrue = false;
                         break;
@@ -113,14 +119,36 @@ public class CrudProfessorService {
 
     private void Listar(){
         Iterable<Professor> professores = this.professorRepository.findAll();
-
         professores.forEach(professor -> {
             System.out.println(professor);
         });
-
         System.out.println();
     }
 
+    private void ListarUm(Scanner scanner){
+        System.out.println("Digite o Id do Professor:");
+        long id = scanner.nextLong();
+
+        Optional<Professor> optional = professorRepository.findById(id);
+        if(optional.isPresent()){
+            Professor professor = optional.get();
+
+            System.out.println("Professor: {");
+            System.out.println("Id: " + professor.getId());
+            System.out.println("Nome: " + professor.getNome());
+            System.out.println("Prontuario: " + professor.getProntuario());
+            System.out.println("Disciplinas: [");
+            for (Disciplina disciplina : professor.getDisciplinas()){
+                System.out.println("\tId: " + disciplina.getId());
+                System.out.println("\tNome: " + disciplina.getNome());
+                System.out.println("\tSemestre: " + disciplina.getSemestre());
+            }
+            System.out.println("]\n");
+        }
+        else {
+            System.out.println("Professor Inexistente");
+        }
+    }
     private void Remover(Scanner scanner){
         System.out.println("Digite o Id do Professor para ser excluido");
         Long id = scanner.nextLong();

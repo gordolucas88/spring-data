@@ -1,6 +1,7 @@
 package com.spring.data.regesc.orm;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity //Informo que a classe é uma tabela
 @Table(name = "professores") //Definindo o nome da tabela, ao inves de usar o nome da classe
@@ -13,12 +14,15 @@ public class Professor {
     @Column(nullable = false, unique = true) // Define a coluna como Unique
     private  String prontuario;
 
+    @OneToMany(mappedBy = "professor", fetch = FetchType.LAZY)
+    private List<Disciplina> disciplinas;
+
     @Deprecated // Server para indicar que nao utilizaremos, criado so por obrigacao do hibernate.
     public  Professor() {
 
     }
 
-    public Professor(String nome, String prontuario) {
+    public Professor(String nome1, String prontuario) {
         this.nome = nome;
         this.prontuario = prontuario;
     }
@@ -45,6 +49,23 @@ public class Professor {
 
     public void setProntuario(String prontuario) {
         this.prontuario = prontuario;
+    }
+
+    public List<Disciplina> getDisciplinas(){
+        return disciplinas;
+    }
+
+    public void setDisciplinas(List<Disciplina> disciplinas){
+        this.disciplinas = disciplinas;
+    }
+
+    @PreRemove
+    // On Delete set null
+    public void atualizaDisciplinaOnDelete(){
+        System.out.println("*** atualiza Disciplina on Delete ***");
+        for (Disciplina disciplina : this.getDisciplinas()){
+            disciplina.setProfessor(null);
+        }
     }
 
     @Override

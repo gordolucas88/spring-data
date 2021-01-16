@@ -2,6 +2,7 @@ package com.spring.data.regesc;
 
 import com.spring.data.regesc.orm.Professor;
 import com.spring.data.regesc.repository.ProfessorRepository;
+import com.spring.data.regesc.service.CrudDisciplinaService;
 import com.spring.data.regesc.service.CrudProfessorService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -13,10 +14,13 @@ import java.util.Scanner;
 public class RegescApplication implements CommandLineRunner {
 
 	private CrudProfessorService professorService;
-	//Injetado automaticamente pelo spring
-	public RegescApplication(CrudProfessorService professorService) {
-		this.professorService = professorService;
+	private CrudDisciplinaService disciplinaService;
 
+	//Injetado automaticamente pelo spring
+
+	public RegescApplication(CrudProfessorService professorService, CrudDisciplinaService disciplinaService) {
+		this.professorService = professorService;
+		this.disciplinaService = disciplinaService;
 	}
 
 	public static void main(String[] args) {
@@ -32,12 +36,16 @@ public class RegescApplication implements CommandLineRunner {
 			System.out.println("Qual entidade você deseja interagir?");
 			System.out.println("0 - Sair");
 			System.out.println("1 - Professor");
+			System.out.println("2 - Disciplina");
 
 			int opcao = scanner.nextInt();
 
 			switch (opcao) {
 				case  1:
 					this.professorService.menu(scanner);
+					break;
+				case 2:
+					this.disciplinaService.menu(scanner);
 					break;
 				default:
 					isTrue = false;
