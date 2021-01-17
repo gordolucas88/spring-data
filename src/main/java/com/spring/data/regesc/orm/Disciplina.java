@@ -2,6 +2,7 @@ package com.spring.data.regesc.orm;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "disciplinas")
@@ -22,7 +23,7 @@ public class Disciplina {
     @JoinTable(name = "disciplinas_alunos",
             joinColumns = @JoinColumn(name = "disciplina_fk"),
             inverseJoinColumns = @JoinColumn(name = "aluno_fk"))
-    List<Aluno> alunos;
+    private Set<Aluno> alunos;
 
     @Deprecated
     public Disciplina() {
@@ -77,11 +78,11 @@ public class Disciplina {
         this.id = id;
     }
 
-    public List<Aluno> getAlunos() {
+    public Set<Aluno> getAlunos() {
         return alunos;
     }
 
-    public void setAlunos(List<Aluno> alunos) {
+    public void setAlunos(Set<Aluno> alunos) {
         this.alunos = alunos;
     }
 }

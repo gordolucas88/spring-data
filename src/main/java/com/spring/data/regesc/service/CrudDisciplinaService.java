@@ -9,10 +9,7 @@ import com.spring.data.regesc.repository.ProfessorRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
 
 @Service
 public class CrudDisciplinaService {
@@ -82,7 +79,7 @@ private AlunoRepository alunoRepository;
         Optional<Professor> optional = professorRepository.findById(professorID);
         if(optional.isPresent()){
             Professor professor = optional.get();
-            List<Aluno> alunos = this.Matricular(scanner);
+            Set<Aluno> alunos = this.Matricular(scanner);
 
             Disciplina disciplina = new Disciplina(nome,semestre,professor);
             disciplina.setAlunos(alunos);
@@ -116,7 +113,7 @@ private AlunoRepository alunoRepository;
             if(optionalProfessor.isPresent()){
                 Professor professor = optionalProfessor.get();
 
-                List<Aluno> alunos = this.Matricular(scanner);
+                Set<Aluno> alunos = this.Matricular(scanner);
 
                 disciplina.setNome(nome);
                 disciplina.setSemestre(semestre);
@@ -156,9 +153,9 @@ private AlunoRepository alunoRepository;
 
     }
 
-    private List<Aluno> Matricular(Scanner scanner) {
+    private Set<Aluno> Matricular(Scanner scanner) {
         Boolean isTrue = true;
-        List<Aluno> alunos = new ArrayList<Aluno>();
+        Set<Aluno> alunos = new HashSet<>();
 
         while (isTrue) {
             System.out.print("Id do Aluno a ser matriculado (Digite 0 para sair): ");
@@ -193,7 +190,7 @@ private AlunoRepository alunoRepository;
 
         if (optionalDisciplina.isPresent()){
             Disciplina disciplina = optionalDisciplina.get();
-            List<Aluno> novosAlunos = this.Matricular(scanner);
+            Set<Aluno> novosAlunos = this.Matricular(scanner);
             disciplina.getAlunos().addAll(novosAlunos);
             this.disciplinaRepository.save(disciplina);
         } else {

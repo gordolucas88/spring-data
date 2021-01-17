@@ -5,6 +5,7 @@ import com.spring.data.regesc.repository.ProfessorRepository;
 import com.spring.data.regesc.service.CrudAlunoService;
 import com.spring.data.regesc.service.CrudDisciplinaService;
 import com.spring.data.regesc.service.CrudProfessorService;
+import com.spring.data.regesc.service.RelatorioService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,13 +18,18 @@ public class RegescApplication implements CommandLineRunner {
 	private CrudProfessorService professorService;
 	private CrudDisciplinaService disciplinaService;
 	private CrudAlunoService alunoService;
+	private RelatorioService relatorioService;
 
 	//Injetado automaticamente pelo spring
 
-	public RegescApplication(CrudProfessorService professorService, CrudDisciplinaService disciplinaService, CrudAlunoService alunoService) {
+	public RegescApplication(CrudProfessorService professorService,
+							 CrudDisciplinaService disciplinaService,
+							 CrudAlunoService alunoService,
+							 RelatorioService relatorioService) {
 		this.professorService = professorService;
 		this.disciplinaService = disciplinaService;
 		this.alunoService = alunoService;
+		this.relatorioService = relatorioService;
 
 	}
 
@@ -42,6 +48,7 @@ public class RegescApplication implements CommandLineRunner {
 			System.out.println("1 - Professor");
 			System.out.println("2 - Disciplina");
 			System.out.println("3 - Aluno");
+			System.out.println("4 - Relatorios");
 
 			int opcao = scanner.nextInt();
 
@@ -54,6 +61,9 @@ public class RegescApplication implements CommandLineRunner {
 					break;
 				case 3:
 					this.alunoService.menu(scanner);
+					break;
+				case 4:
+					this.relatorioService.menu(scanner);
 					break;
 				default:
 					isTrue = false;
